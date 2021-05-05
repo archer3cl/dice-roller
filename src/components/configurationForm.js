@@ -3,26 +3,25 @@ import './configurationForm.css';
 
 export default function ConfigurationForm({ onSubmitConfiguration }) {
   const newDie = { faces: 6 };
-  const [diceConfigurationState, setDiceConfigurationState] = useState([
-    newDie,
-  ]);
+  const [diceConfiguration, setDiceConfiguration] = useState([newDie]);
+  const [players, setPlayers] = useState(1);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmitConfiguration(diceConfigurationState);
+    onSubmitConfiguration({ players, dice: diceConfiguration });
   }
 
   function handleDiceNumberChange(evt) {
-    if (evt.target.value === diceConfigurationState.length) return;
-    if (evt.target.value < diceConfigurationState.length) {
-      const updatedDice = [...diceConfigurationState];
+    if (evt.target.value === diceConfiguration.length) return;
+    if (evt.target.value < diceConfiguration.length) {
+      const updatedDice = [...diceConfiguration];
       updatedDice.splice(evt.target.value);
-      setDiceConfigurationState(updatedDice);
+      setDiceConfiguration(updatedDice);
     } else {
-      setDiceConfigurationState([
-        ...diceConfigurationState,
+      setDiceConfiguration([
+        ...diceConfiguration,
         ...Array.from(
-          { length: evt.target.value - diceConfigurationState.length },
+          { length: evt.target.value - diceConfiguration.length },
           () => {
             return { ...newDie };
           }
@@ -32,13 +31,28 @@ export default function ConfigurationForm({ onSubmitConfiguration }) {
   }
 
   function handleDieFaceChange(evt) {
-    const updatedDice = [...diceConfigurationState];
+    const updatedDice = [...diceConfiguration];
     updatedDice[evt.target.dataset.idx].faces = parseInt(evt.target.value, 10);
-    setDiceConfigurationState(updatedDice);
+    setDiceConfiguration(updatedDice);
+  }
+
+  function handlePlayersChange(evt) {
+    setPlayers(parseInt(evt.target.value, 10));
   }
 
   return (
     <form onSubmit={handleSubmit} className="configurationForm">
+      <div className="configurationForm__players-amount">
+        <label htmlFor="players">Número de jugadores: </label>
+        <input
+          type="number"
+          min="1"
+          name="players"
+          id="players"
+          value={players}
+          onChange={handlePlayersChange}
+        />
+      </div>
       <div className="configurationForm__die-amount">
         <label htmlFor="diceNumber">Número de dados: </label>
         <input
@@ -46,12 +60,12 @@ export default function ConfigurationForm({ onSubmitConfiguration }) {
           min="1"
           name="diceNumber"
           id="diceNumber"
-          value={diceConfigurationState.length}
+          value={diceConfiguration.length}
           onChange={handleDiceNumberChange}
         />
       </div>
       <div className="configurationForm__die-config-container">
-        {diceConfigurationState.map((val, idx) => {
+        {diceConfiguration.map((val, idx) => {
           return (
             <div key={`die-${idx}`} className="configurationForm__die-config">
               <p>Dado {idx + 1}</p>
@@ -70,7 +84,7 @@ export default function ConfigurationForm({ onSubmitConfiguration }) {
           );
         })}
       </div>
-      <button type="submit">Lanzar</button>
+      <button type="submit">Comenzar</button>
     </form>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Die from './die';
 
-export default function RollDie({ faces, roll }) {
+export default function RollDie({ faces, roll, onComplete }) {
   const [state, setState] = useState('');
   const [displayValue, setDisplayValue] = useState(1);
   const [result, setResult] = useState();
@@ -42,8 +42,9 @@ export default function RollDie({ faces, roll }) {
       }
       var newResult = dieValues[Math.floor(Math.random() * dieValues.length)];
       setResult(newResult);
+      onComplete(newResult);
     }
-  }, [state, faces]);
+  }, [state, faces, onComplete]);
 
   if (state === 'ROLLING') return <Die value={displayValue} />;
 
