@@ -1,52 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
+import { useMachine } from '@xstate/react';
+import { useEffect } from 'react';
+import { createDieMachine } from '../machines/dieMachine';
 import Die from './die';
 
-export default function RollDie({ faces, roll, onComplete }) {
-  const [state, setState] = useState('');
-  const [displayValue, setDisplayValue] = useState(1);
-  const [result, setResult] = useState();
-  const prevResultRef = useRef();
+export default function RollDie({ faces = 6, roll, onComplete }) {
+  const [state, send, service] = useMachine(createDieMachine(faces), {
+    devTools: process.env.NODE_ENV === 'development',
+  });
+  const { value, displayValue } = state.context;
 
   useEffect(() => {
     if (roll) {
-      setState('ROLLING');
-      setTimeout(() => {
-        setState('RESULT');
-      }, 500);
+      send('ROLL');
     }
-  }, [roll]);
+  }, [roll, send]);
 
   useEffect(() => {
-    let intervalId;
-
-    if (state === 'ROLLING') {
-      intervalId = setInterval(() => {
-        const dieValues = Array.from({ length: faces }, (_, i) => i + 1);
-        setDisplayValue(Math.ceil(Math.random() * dieValues.length));
-      }, 50);
-    }
-
-    return () => clearInterval(intervalId);
-  }, [state, displayValue, faces]);
-
-  useEffect(() => {
-    prevResultRef.current = result;
-  });
-
-  useEffect(() => {
-    if (state === 'RESULT') {
-      const dieValues = Array.from({ length: faces }, (_, i) => i + 1);
-      const prevResult = prevResultRef.current;
-      if (prevResult && dieValues.length > 1) {
-        dieValues.splice(dieValues.indexOf(prevResult), 1);
+    const subscription = service.subscribe((state) => {
+      if (state.matches('displaying')) {
+        onComplete?.(state.context.value);
       }
-      var newResult = dieValues[Math.floor(Math.random() * dieValues.length)];
-      setResult(newResult);
-      onComplete(newResult);
-    }
-  }, [state, faces, onComplete]);
+    });
 
-  if (state === 'ROLLING') return <Die value={displayValue} />;
+    return subscription.unsubscribe;
+  }, [service, onComplete]);
 
-  return <Die value={result} />;
+  if (state.matches('rolling')) return <Die value={displayValue} />;
+  return <Die value={value} />;
 }
