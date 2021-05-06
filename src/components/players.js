@@ -1,6 +1,7 @@
 import { useGameState } from '../lib/gameState';
 import { useCallback, useEffect, useState } from 'react';
 import RollDie from './rollDie';
+import './players.css';
 
 function PlayerRoll({ turn, currentTurn, diceConfig, onComplete }) {
   const [rollDice, setRollDice] = useState(false);
@@ -30,7 +31,7 @@ function PlayerRoll({ turn, currentTurn, diceConfig, onComplete }) {
   if (turn > currentTurn) return null;
 
   return (
-    <div>
+    <div className="player-roll">
       <button
         type="button"
         onClick={onRollDiceCliked}
@@ -38,7 +39,7 @@ function PlayerRoll({ turn, currentTurn, diceConfig, onComplete }) {
       >
         Jugador {turn} {turn === currentTurn && ', ¡Tira!'}
       </button>
-      <div className="App__dice-container">
+      <div className="player-roll__dice-container">
         {diceConfig?.map((value, idx) => (
           <RollDie
             key={idx}

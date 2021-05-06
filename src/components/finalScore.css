@@ -1,0 +1,40 @@
+.final-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.final-score h2 {
+  text-align: center;
+  color: var(--pink);
+  font-size: 3rem;
+  line-height: 1;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  background-color: var(--beige);
+  transform: skew(15deg);
+  width: 300px;
+}
+
+.final-score__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.final-score__actions button:nth-child(1) {
+  background-color: var(--white);
+  color: var(--blue);
+  border-color: var(--blue);
+  margin-right: 1rem;
+}
+
+.final-score__actions button:nth-child(2) {
+  background-color: var(--pink);
+  border-color: rgb(255, 119, 119);
+}
+
+.final-score .winner {
+  margin-left: 1rem;
+  background-color: var(--pink);
+  color: var(--white);
+}

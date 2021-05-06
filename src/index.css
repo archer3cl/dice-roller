@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
 
+:root {
+  --pink: rgb(255, 119, 119);
+  --blue: rgb(0, 48, 59);
+  --white: rgb(241, 242, 218);
+  --beige: rgb(255, 206, 150);
+}
+
 *,
 ::before,
 ::after {
@@ -22,7 +29,7 @@ body {
   font-size: 1rem;
   line-height: 1.5rem;
   font-family: 'Fjalla One', sans-serif;
-  background-color: #fff6af;
+  background-color: var(--blue);
 }
 
 button,

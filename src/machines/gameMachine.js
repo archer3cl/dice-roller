@@ -3,7 +3,7 @@ import { assign, createMachine } from 'xstate';
 const initialContext = {
   players: 1,
   playerTurn: 1,
-  diceSettings: [],
+  diceSettings: [{ faces: 6 }],
   results: [],
   prevResults: [],
 };

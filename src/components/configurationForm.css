@@ -23,21 +23,10 @@
 
 .configurationForm__die-config {
   padding: 1rem;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid var(--beige);
 }
 
 .configurationForm button[type='submit'] {
-  cursor: pointer;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  border-radius: 0.5rem;
-  color: #f9fafb;
-  background-color: #ef4444;
-  border-color: #b91c1c;
-}
-
-.configurationForm button[type='submit']:hover {
-  background-color: #b91c1c;
+  background-color: var(--pink);
+  border-color: rgb(255, 119, 119);
 }

@@ -1,5 +1,6 @@
 .App {
   padding: 1rem;
+  color: var(--white);
 }
 
 .App h1 {
@@ -8,8 +9,17 @@
   font-style: italic;
 }
 
-.App__dice-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.App button {
+  cursor: pointer;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  color: rgb(241, 242, 218);
+  max-width: 300px;
+}
+
+.App button:hover:enabled {
+  text-decoration: underline;
 }

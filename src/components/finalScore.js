@@ -1,4 +1,5 @@
 import { useGameState } from '../lib/gameState';
+import './finalScore.css';
 
 export default function FinalScore() {
   const [gameState, send] = useGameState();
@@ -9,24 +10,28 @@ export default function FinalScore() {
   const largestValue = Math.max(...flatResults);
 
   return (
-    <div>
+    <div className="final-score">
       <div>
-        Se acabo.
+        <h2>¡Se acabo!</h2>
         <ul>
           {flatResults.map((value, index) => (
             <li key={index}>
               Jugador {index + 1} - {value} puntos{' '}
-              {value === largestValue && '¡GANADOR!'}
+              {value === largestValue && (
+                <span className="winner">¡GANADOR!</span>
+              )}
             </li>
           ))}
         </ul>
       </div>
-      <button type="button" onClick={() => send('REPLAY')}>
-        Repetir
-      </button>
-      <button type="button" onClick={() => send('RESET')}>
-        Comenzar de nuevo
-      </button>
+      <div className="final-score__actions">
+        <button type="button" onClick={() => send('REPLAY')}>
+          Repetir
+        </button>
+        <button type="button" onClick={() => send('RESET')}>
+          Comenzar de nuevo
+        </button>
+      </div>
     </div>
   );
 }
