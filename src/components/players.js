@@ -28,10 +28,11 @@ function PlayerRoll({ turn, currentTurn, diceConfig, onComplete }) {
     }
   }, [onComplete, diceConfig.length, results]);
 
-  if (turn > currentTurn) return null;
-
   return (
-    <div className="player-roll">
+    <div
+      className="player-roll"
+      style={{ display: turn > currentTurn ? 'none' : 'block' }}
+    >
       <button
         type="button"
         onClick={onRollDiceCliked}
